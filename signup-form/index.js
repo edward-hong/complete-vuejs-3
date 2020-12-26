@@ -18,14 +18,15 @@ const app = createApp({
       </div>
     </div>
 
-    <input @input="input" :value="value" />
-    <div v-if="error">{{ error }}</div>
+    <input type="checkbox" v-model="value" value="a" />
+    <input type="checkbox" v-model="value" value="b" />
+    {{ value }}
   `,
   data() {
     return {
       count: 0,
       numbers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-      value: 'User',
+      value: ['a'],
     }
   },
   computed: {
