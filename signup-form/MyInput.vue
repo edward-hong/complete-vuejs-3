@@ -4,7 +4,7 @@
       <label :for="name">{{ name }}</label>
       <div class="error">{{ error }}</div>
     </div>
-    <input :id="name" type="text" v-model="value" />
+    <input :id="name" type="text" :value="value" @input="input" />
   </div>
 </template>
 
@@ -18,11 +18,9 @@ export default {
     rules: {
       type: Object, // min, required
     },
-  },
-  data() {
-    return {
-      value: '',
-    }
+    value: {
+      type: String,
+    },
   },
   computed: {
     error() {
@@ -33,6 +31,11 @@ export default {
       if (this.rules.min && this.value.length < this.rules.min) {
         return `Minimum length is ${this.rules.min}`
       }
+    },
+  },
+  methods: {
+    input($evt) {
+      this.$emit('update', { value: $evt.target.value, name: this.name })
     },
   },
 }
