@@ -1,32 +1,37 @@
 import { createApp } from 'vue/dist/vue.esm-browser.js'
 
-const Hello = {
+const Num = {
+  props: {
+    qwer: {
+      type: Number,
+      required: true,
+    },
+  },
   template: `
-    <h3>Hello from component</h3>
+    <div :class="getClass(qwer)">{{ qwer }}</div>
   `,
+  methods: {
+    getClass(number) {
+      if (this.isEven(number)) {
+        return 'red'
+      }
+      return 'blue'
+    },
+    isEven(number) {
+      return number % 2 === 0
+    },
+  },
 }
 
 const app = createApp({
   components: {
-    Hello,
+    Num,
   },
   template: `
-    <Hello />
     <button @click="increment(5)">Increment</button>
     <p>{{ count }}</p>
 
-    <div v-if="isEven(count)">
-      Even
-    </div>
-    <div v-else>
-      Odd
-    </div>
-
-    <div v-for="number in numbers">
-      <div :class="getClass(number)" :title="number">
-        {{ number }}
-      </div>
-    </div>
+    <Num v-for="asdf in numbers" :qwer="asdf" />
 
     <input type="checkbox" v-model="value" value="a" />
     <input type="checkbox" v-model="value" value="b" />
@@ -40,9 +45,6 @@ const app = createApp({
     }
   },
   computed: {
-    evenList() {
-      return this.numbers.filter(this.isEven)
-    },
     error() {
       if (this.value.length < 7) {
         return 'Too short'
@@ -53,17 +55,8 @@ const app = createApp({
     input($evt) {
       this.value = $evt.target.value
     },
-    getClass(number) {
-      if (this.isEven(number)) {
-        return 'red'
-      }
-      return 'blue'
-    },
     increment(val) {
       this.count += val
-    },
-    isEven(number) {
-      return number % 2 === 0
     },
   },
 }).mount('#app')
