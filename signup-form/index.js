@@ -2,15 +2,20 @@ import { createApp } from 'vue/dist/vue.esm-browser.js'
 
 const Num = {
   props: {
-    qwer: {
+    number: {
       type: Number,
       required: true,
     },
   },
   template: `
-    <div :class="getClass(qwer)">{{ qwer }}</div>
+    <button :class="getClass(number)" @click="handleClick">
+      {{ number }}
+    </button>
   `,
   methods: {
+    handleClick() {
+      this.$emit('chosen', { number: this.number })
+    },
     getClass(number) {
       if (this.isEven(number)) {
         return 'red'
@@ -28,35 +33,19 @@ const app = createApp({
     Num,
   },
   template: `
-    <button @click="increment(5)">Increment</button>
-    <p>{{ count }}</p>
-
-    <Num v-for="asdf in numbers" :qwer="asdf" />
-
-    <input type="checkbox" v-model="value" value="a" />
-    <input type="checkbox" v-model="value" value="b" />
-    {{ value }}
+    <Num v-for="number in numbers" :number="number" @chosen="putInArray" />
+    <h3>Clicked number</h3>
+    <Num v-for="number in clickedNumbers" :number="number" />
   `,
   data() {
     return {
-      count: 0,
       numbers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-      value: ['a'],
+      clickedNumbers: [],
     }
   },
-  computed: {
-    error() {
-      if (this.value.length < 7) {
-        return 'Too short'
-      }
-    },
-  },
   methods: {
-    input($evt) {
-      this.value = $evt.target.value
-    },
-    increment(val) {
-      this.count += val
+    putInArray(payload) {
+      this.clickedNumbers.push(payload.number)
     },
   },
 }).mount('#app')
