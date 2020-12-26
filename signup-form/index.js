@@ -2,7 +2,7 @@ import { createApp } from 'vue/dist/vue.esm-browser.js'
 
 const app = createApp({
   template: `
-    <button v-on:click="increment(5)">Increment</button>
+    <button @click="increment(5)">Increment</button>
     <p>{{ count }}</p>
 
     <div v-if="isEven(count)">
@@ -12,8 +12,10 @@ const app = createApp({
       Odd
     </div>
 
-    <div v-for="number in evenList">
-      {{ number }}
+    <div v-for="number in numbers">
+      <div :class="getClass(number)" :title="number">
+        {{ number }}
+      </div>
     </div>
   `,
   data() {
@@ -28,6 +30,12 @@ const app = createApp({
     },
   },
   methods: {
+    getClass(number) {
+      if (this.isEven(number)) {
+        return 'red'
+      }
+      return 'blue'
+    },
     increment(val) {
       this.count += val
     },
