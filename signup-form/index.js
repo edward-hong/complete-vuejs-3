@@ -12,10 +12,8 @@ const app = createApp({
       Odd
     </div>
 
-    <div v-for="number in numbers">
-      <div v-if="isEven(number)">
-        {{ number }}
-      </div>
+    <div v-for="number in evenList">
+      {{ number }}
     </div>
   `,
   data() {
@@ -23,6 +21,11 @@ const app = createApp({
       count: 0,
       numbers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     }
+  },
+  computed: {
+    evenList() {
+      return this.numbers.filter(this.isEven)
+    },
   },
   methods: {
     increment(val) {
