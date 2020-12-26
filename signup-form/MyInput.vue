@@ -4,7 +4,7 @@
       <label :for="name">{{ name }}</label>
       <div class="error">{{ error }}</div>
     </div>
-    <input :id="name" type="text" :value="value" @input="input" />
+    <input :id="name" :type="type" :value="value" @input="input" />
   </div>
 </template>
 
@@ -21,21 +21,31 @@ export default {
     value: {
       type: String,
     },
+    type: {
+      type: String,
+    },
   },
   computed: {
     error() {
-      if (this.rules.required && !this.value.length) {
-        return 'Required'
-      }
-
-      if (this.rules.min && this.value.length < this.rules.min) {
-        return `Minimum length is ${this.rules.min}`
-      }
+      return this.validate(this.value)
     },
   },
   methods: {
     input($evt) {
-      this.$emit('update', { value: $evt.target.value, name: this.name })
+      this.$emit('update', {
+        value: $evt.target.value,
+        name: this.name,
+        valid: this.validate($evt.target.value) ? false : true,
+      })
+    },
+    validate(value) {
+      if (this.rules.required && !value.length) {
+        return 'Required'
+      }
+
+      if (this.rules.min && value.length < this.rules.min) {
+        return `Minimum length is ${this.rules.min}`
+      }
     },
   },
 }
