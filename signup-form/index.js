@@ -17,19 +17,31 @@ const app = createApp({
         {{ number }}
       </div>
     </div>
+
+    <input @input="input" :value="value" />
+    <div v-if="error">{{ error }}</div>
   `,
   data() {
     return {
       count: 0,
       numbers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      value: 'User',
     }
   },
   computed: {
     evenList() {
       return this.numbers.filter(this.isEven)
     },
+    error() {
+      if (this.value.length < 7) {
+        return 'Too short'
+      }
+    },
   },
   methods: {
+    input($evt) {
+      this.value = $evt.target.value
+    },
     getClass(number) {
       if (this.isEven(number)) {
         return 'red'
