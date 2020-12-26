@@ -1,5 +1,6 @@
 <template>
-  <MyInput name="Username" />
+  <MyInput name="Username" :rules="{ required: true, min: 5 }" />
+  <MyInput name="Password" :rules="{ required: true, min: 10 }" />
 
   <MyButton color="white" background="darkslateblue" :disabled="!valid" />
 </template>
