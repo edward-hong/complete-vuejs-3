@@ -1,5 +1,5 @@
 <template>
-  <button :style="{ background, color }">
+  <button :style="{ background, color }" :disabled="disabled">
     Button
   </button>
 </template>
@@ -33,5 +33,9 @@ button {
 
 button:hover {
   filter: brightness(125%);
+}
+
+button:disabled {
+  opacity: 0.5;
 }
 </style>
