@@ -1,6 +1,5 @@
 <template>
   <div class="card">
-    <button @click="fetchData">Fetch</button>
     <div class="title">title</div>
     <div class="content">content</div>
     <div class="description">description</div>
@@ -12,6 +11,10 @@ const api = 'https://pokeapi.co/api/v2/pokemon'
 const ids = [1, 4, 7]
 
 export default {
+  created() {
+    this.fetchData()
+  },
+
   methods: {
     async fetchData() {
       const responses = await Promise.all(
